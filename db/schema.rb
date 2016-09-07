@@ -24,11 +24,12 @@ ActiveRecord::Schema.define(version: 20160907081021) do
 
   create_table "messages", force: :cascade do |t|
     t.string   "content"
-    t.integer  "users_id"
+    t.integer  "user_id"
+    t.integer  "chatroom_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "chatroom_id"
-    t.index ["users_id"], name: "index_messages_on_users_id", using: :btree
+    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,5 +38,6 @@ ActiveRecord::Schema.define(version: 20160907081021) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "messages", "users", column: "users_id"
+  add_foreign_key "messages", "chatrooms"
+  add_foreign_key "messages", "users"
 end
